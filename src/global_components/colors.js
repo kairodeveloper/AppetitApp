@@ -1,0 +1,6 @@
+export const colorPrimary = "#E67A1F"
+export const colorFundo = "#F6F6F6"
+export const colorSubTitle = "#rgba(0,0,0,0.54)"
+export const colorInputBorder = "#rgba(0, 0, 0, 0.4)"
+export const colorWhite = "#FFF"
+export const colorBlack = "#000"
