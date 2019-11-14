@@ -1,3 +1,6 @@
 export const LOGOIMAGE = require('./appetit_logo.png')
 export const HIDEPASSWORD = require('./icons/eye_hide.png')
 export const SHOWPASSWORD = require('./icons/eye_show.png')
+export const PLUSICON = require('./icons/plus.png')
+export const SEARCHICON = require('./icons/search.png')
+export const FILTERICON = require('./icons/filter.png')

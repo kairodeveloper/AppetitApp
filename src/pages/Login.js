@@ -37,6 +37,10 @@ export default class Login extends Component {
       }
     }
 
+    goToPedidos() {
+      this.props.navigation.replace('PedidosList')
+    }
+
     render() {
       let focusedEmail = this.state.inputFocused==emailText
       let focusedSenha = this.state.inputFocused==senhaText
@@ -132,7 +136,7 @@ export default class Login extends Component {
 
                 <TouchableOpacity onPress={() => {
                   if (this.state.opacityButton==1) {
-                    alert('login')
+                    this.goToPedidos()
                   }
                 }}>
                   <View style={[styles.buttonViewStyle, {opacity: this.state.opacityButton} ]}>
@@ -168,7 +172,7 @@ const styles = StyleSheet.create({
   },
   containerInput: {
     marginTop: 16, 
-    height: 60, 
+    height: 56, 
     backgroundColor: colorWhite,
     borderColor: colorInputBorder, 
     borderWidth: 2, 
@@ -177,7 +181,7 @@ const styles = StyleSheet.create({
   },
   containerSelectedInput: {
     marginTop: 16, 
-    height: 60,
+    height: 56,
     backgroundColor: colorWhite,
     borderColor: colorPrimary, 
     borderWidth: 2, 

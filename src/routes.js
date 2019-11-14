@@ -1,7 +1,8 @@
 import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
-import MainPage from './pages/MainPage'
 import Login from './pages/Login';
+import PedidosList from './pages/PedidosList';
+import { colorPrimary } from './global_components/colors';
 
 const RootStack = createStackNavigator({
     Login: {
@@ -10,23 +11,10 @@ const RootStack = createStackNavigator({
             header: null,
         },
     },
-    MainPage: {
-        screen: MainPage,
+    PedidosList: {
+        screen: PedidosList,
         navigationOptions: {
-            state:{
-                checked: false,
-             },
-            title: "Central",
-            headerTitleStyle: {
-                color: "#FFF",
-            },
-            headerTitleStyle: {
-                color: "#FFF"
-            },
-            headerTintColor:  "#FFF",
-            headerStyle: {
-                backgroundColor: "#343F4B"
-            },
+            header: null,
         }
     },
 })
