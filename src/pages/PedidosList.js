@@ -103,7 +103,7 @@ export default class PedidosList extends Component {
     }
 
     goToNovoPedido() {
-        this.props.navigation.replace('NovoPedidoPrimeiraEtapa')
+        this.props.navigation.navigate('NovoPedidoPrimeiraEtapa')
     }
 
     render() {
@@ -128,6 +128,7 @@ export default class PedidosList extends Component {
                     <Image source={ FILTERICON } style={styles.iconButton} />
                 </View>
                 <FlatList
+                    style={{marginTop: 16}}
                     extraData={this.state}
                     data={this.state.pedidos}
                     renderItem={({ item }) => <TouchableOpacity onPress={() => {}}>

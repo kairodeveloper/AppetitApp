@@ -33,18 +33,59 @@ export default class NovoPedidoPrimeiraEtapa extends Component {
         produtos.push({mid: index++, nome: 'Café simples', opcoes: [], valor: 2.0, tipo: 'Café'})
         produtos.push({mid: index++, nome: 'Café com leite', opcoes: [], valor: 2.50, tipo: 'Café'})
         produtos.push({mid: index++, nome: 'Café descafeinado', opcoes: [], valor: 3.0, tipo: 'Café'})
-        produtos.push({mid: index++, nome: 'Coxinha', opcoes: [], valor: 2.0, tipo: 'Salgado'})
-        produtos.push({mid: index++, nome: 'Pastel', opcoes: [{name: 'frango', label: 'Pastel de frango', selecionado: false}, {name: 'carne', label: 'Pastel de carne ', selecionado: false}], valor: 2.0, tipo: 'Salgado'})
-        produtos.push({mid: index++, nome: 'Enrolado', opcoes: [], valor: 2.0, tipo: 'Salgado'})
-        produtos.push({mid: index++, nome: 'Croissant', opcoes: [], valor: 3.0, tipo: 'Salgado'})
+        produtos.push({mid: index++, nome: 'Coxinha', opcoes: [], valor: 2.0, tipo: 'Salgados'})
+        produtos.push({mid: index++, nome: 'Pastel', opcoes: [
+            {name: 'frango', label: 'Pastel de frango', selecionado: false}, 
+            {name: 'carne', label: 'Pastel de carne ', selecionado: false},
+            {name: 'queijo', label: 'Pastel de queijo ', selecionado: false}
+        ], valor: 2.0, tipo: 'Salgados'})
+        produtos.push({mid: index++, nome: 'Enrolado', opcoes: [], valor: 2.0, tipo: 'Salgados'})
+        produtos.push({mid: index++, nome: 'Croissant', opcoes: [], valor: 3.0, tipo: 'Salgados'})
 
-
+        produtos = this.agruparPorTipo(produtos)
         this.state = {
-            produtos: produtos
+            produtos: produtos,
+            cestinha: []
         }
     }
 
+    agruparPorTipo = (produtos) => {
+        let produtosAgrupados = produtos
+        let containersProdutos = []
+        for (let index = 0; index < produtosAgrupados.length; index++) {
+            let produtoContainer = {}
+            produtoContainer.produto = produtosAgrupados[index]
+            if (index == 0) {
+                produtoContainer.showTipo = true
+            } else if (produtosAgrupados[index-1].tipo==produtosAgrupados[index].tipo) {
+                produtoContainer.showTipo = false
+            } else {
+                produtoContainer.showTipo = true
+            }
+            containersProdutos.push(produtoContainer)
+        }
+        return containersProdutos
+    }
     
+
+    getOpcoesLabel(opcoes) {
+        let retorno = ""
+        let counter = 0
+        let last = opcoes.length
+
+        opcoes.map((it) => {
+            retorno += it.name
+            if (counter==last-1) {
+                retorno+= "."
+            } else {
+                retorno += " ou "
+            }
+            counter ++
+        })
+
+        return retorno.length>18 ? retorno.substring(0, 15)+"..." : retorno
+
+    }
 
     render() {
         return(
@@ -71,24 +112,33 @@ export default class NovoPedidoPrimeiraEtapa extends Component {
                     <TextInput placeholder={inputBuscaPlaceholder} style={styles.textSearchInput}></TextInput>
                 </View>
                 <FlatList
-                    style={{marginTop: 32}}
+                    style={{marginTop: 16}}
                     extraData={this.state}
                     data={this.state.produtos}
                     renderItem={({ item }) => <TouchableOpacity onPress={() => {}}>
-                        
+                        { item.showTipo ? (
+                            <Text style={styles.textCardDate}>{item.produto.tipo}</Text>
+                        ) : (
+                            <View />
+                        )}
                         <View style={styles.containerCard}>
                                     <View flex = {1}></View>
                                     <View style={styles.subContainerCard}>
                                         <View style={styles.containerTop}>
                                             <View style={styles.subContainerCard}>
-                                                <Text style={styles.textPedidoTop}>{item.nome}</Text>
+                                                <Text style={styles.textPedidoTop}>{item.produto.nome}</Text>
                                             </View>
-                                            <View style={styles.subContainerCardValor}>
-                                                <Text style={styles.textPedidoTop}>{prefixoDinheiroReal}{item.valor}</Text>
-                                            </View>
+                                            { item.produto.opcoes.length>0 ? (
+                                                <View style={styles.subContainerCard}>
+                                                    <Text style={styles.textPedidoBottom}>{this.getOpcoesLabel(item.produto.opcoes)}</Text>
+                                                </View>
+                                            ) : (
+                                                <View />
+                                            ) }
+                                            
                                         </View>
-                                        <View style={styles.subContainerCard}>
-                                            <Text style={styles.textPedidoBottom}>{item.opcoes.length}</Text>
+                                        <View style={styles.subContainerCardValor}>
+                                            <Text style={styles.textPedidoTop}>{prefixoDinheiroReal}{item.produto.valor}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -150,16 +200,19 @@ const styles = StyleSheet.create({
     },
     containerTop: {
         flex: 4, 
-        flexDirection: 'row'
+        flexDirection: 'column'
     },
     subContainerCard: {
         flex: 4, 
-        flexDirection: 'column',
-        justifyContent: 'center'
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start'
+
     },
     subContainerCardValor: {
-        flex: 4, 
-        alignItems: 'flex-end'
+        flex: 2, 
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     buttonView: {
         flexDirection: 'row', 
