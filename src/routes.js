@@ -3,6 +3,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 import Login from './pages/Login';
 import PedidosList from './pages/PedidosList';
 import { colorPrimary } from './global_components/colors';
+import NovoPedidoPrimeiraEtapa from './pages/NovoPedidoPrimeiraEtapa';
 
 const RootStack = createStackNavigator({
     Login: {
@@ -16,6 +17,9 @@ const RootStack = createStackNavigator({
         navigationOptions: {
             header: null,
         }
+    },
+    NovoPedidoPrimeiraEtapa: {
+        screen: NovoPedidoPrimeiraEtapa,
     },
 })
 

@@ -17,139 +17,78 @@ import { colorFundo, colorFundoPedidos, colorPrimary, colorGreenBorder, colorBla
 import { saudacaoPedidosList, novoPedidoButtonLabel, inputBuscaPlaceholder, complementoDateEValor, prefixoDinheiroReal } from '../global_components/strings';
 
 
-export default class PedidosList extends Component {
+export default class NovoPedidoPrimeiraEtapa extends Component {
 
     constructor(props) {
         super(props)
 
-        let pedidos = []
-        let dateImpar = "2019-11-05"
-        let datePar = "2019-11-06"
-        let indexs = 1
-        for (let index = 1; index < 10; index++) {
-            let pedido = {}
-            pedido.mid = index
-            pedido.nome = 'João Ribeiro'
-            pedido.valor = 5.0
-            pedido.valorTodos = 0
-            pedido.conteudo = '1x cuzcuz, 1x salgado'
-            pedido.date = index%2==0 ? new Date(datePar) : new Date(dateImpar)
-            pedidos.push(pedido)
-            indexs = index
-        }
+        let produtos = []
+        let index = 1
+        produtos.push({mid: index++, nome: 'Cuscuz simples', opcoes: [{name: 'milho', label: 'Cuscuz de milho', selecionado: false}, {name: 'arroz', label: 'Cuscuz de arroz', selecionado: false}], valor: 2.25, tipo: 'Cuscuz'})
+        produtos.push({mid: index++, nome: 'Cuscuz completo', opcoes: [{name: 'milho', label: 'Cuscuz de milho', selecionado: false}, {name: 'arroz', label: 'Cuscuz de arroz', selecionado: false}], valor: 3.25, tipo: 'Cuscuz'})
+        produtos.push({mid: index++, nome: 'Pão caseiro', opcoes: [], valor: 2.25, tipo: 'Pães'})
+        produtos.push({mid: index++, nome: 'Pão caseiro completo', opcoes: [], valor: 3.25, tipo: 'Pães'})
+        produtos.push({mid: index++, nome: 'Misto quente', opcoes: [], valor: 3.0, tipo: 'Pães'})
+        produtos.push({mid: index++, nome: 'Língua de sogra (pq.)', opcoes: [], valor: 2.0, tipo: 'Pães'})
+        produtos.push({mid: index++, nome: 'Café simples', opcoes: [], valor: 2.0, tipo: 'Café'})
+        produtos.push({mid: index++, nome: 'Café com leite', opcoes: [], valor: 2.50, tipo: 'Café'})
+        produtos.push({mid: index++, nome: 'Café descafeinado', opcoes: [], valor: 3.0, tipo: 'Café'})
+        produtos.push({mid: index++, nome: 'Coxinha', opcoes: [], valor: 2.0, tipo: 'Salgado'})
+        produtos.push({mid: index++, nome: 'Pastel', opcoes: [{name: 'frango', label: 'Pastel de frango', selecionado: false}, {name: 'carne', label: 'Pastel de carne ', selecionado: false}], valor: 2.0, tipo: 'Salgado'})
+        produtos.push({mid: index++, nome: 'Enrolado', opcoes: [], valor: 2.0, tipo: 'Salgado'})
+        produtos.push({mid: index++, nome: 'Croissant', opcoes: [], valor: 3.0, tipo: 'Salgado'})
 
-        let pedido = {}
-        pedido.mid = indexs
-        pedido.nome = 'João Ribeiro'
-        pedido.valor = 5.0
-        pedido.valorTodos = 0
-        pedido.conteudo = '1x cuzcuz, 1x salgado'
-        pedido.date = new Date()
-        pedidos.push(pedido)
-
-        pedidos = this.ordernarPedidosPelaData(pedidos)
-        pedidos = this.agruparPorData(pedidos)
 
         this.state = {
-            pedidos: pedidos
+            produtos: produtos
         }
     }
 
-    ordernarPedidosPelaData = (pedidos) => {
-        let pedidosOrdenados = pedidos
-        for (let j = 0; j < pedidosOrdenados.length; j++) {
-            for (let k = 0; k < pedidosOrdenados.length-1; k++) {
-                if (pedidosOrdenados[k].date.getTime() < pedidosOrdenados[k+1].date.getTime()){
-                    let pedido = pedidosOrdenados[k]
-                    pedidosOrdenados[k] = pedidosOrdenados[k+1]
-                    pedidosOrdenados[k+1] = pedido
-                }
-            }
-        }
-        return pedidos
-    }
-
-    agruparPorData = (pedidos) => {
-        let pedidosAgrupados = pedidos
-        let containersPedidos = []
-        for (let index = 0; index < pedidosAgrupados.length; index++) {
-            let pedidoContainer = {}
-            pedidoContainer.pedido = pedidosAgrupados[index]
-            if (index == 0) {
-                pedidoContainer.showDate = true
-            } else if (pedidosAgrupados[index-1].date.getTime()==pedidosAgrupados[index].date.getTime()) {
-                pedidoContainer.showDate = false
-            } else {
-                pedidoContainer.showDate = true
-            }
-            containersPedidos.push(pedidoContainer)
-        }
-        return containersPedidos
-    }
-
-    valorPorData = (data) => {
-        let valor = 0
-        let containersPedidos = this.state.pedidos
-        containersPedidos.map((it) => {
-            if (it.pedido.date.getTime()==data.getTime()) {
-                valor+=it.pedido.valor
-            }
-        })
-        return valor
-    }
-
-    getDate = (date) => {
-        return date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()
-    }
-
-    goToNovoPedido() {
-        this.props.navigation.replace('NovoPedidoPrimeiraEtapa')
-    }
+    
 
     render() {
         return(
             <View style={styles.container}>
                 <View style={styles.containerSaudacao}>
-                    <Text style={styles.saudacao}>{saudacaoPedidosList}</Text>
+                    <Text style={styles.saudacao}>Informações para o pedido</Text>
                 </View>
-                <View style={styles.containerButtonNovoPedido}>
-                    <TouchableOpacity onPress={() => {
-                        this.goToNovoPedido()
-                    }}>
-                        <View style={styles.buttonView}>
-                            <Image source={ PLUSICON } style={styles.iconButton} />
-                            <Text style={styles.textButton}>{novoPedidoButtonLabel}</Text>
-                        </View>
-                    </TouchableOpacity>
+                <Text style={styles.textButton}>Preencha as informações abaixo para concluir o pedido.</Text>
+                
+                <View style={{flexDirection: 'row', marginTop: 16}}>
+                    <View style={{flex: 2}}>
+                        <Text style={{fontSize: 16, color: colorBlack}}>O que você está vendendo?</Text>
+                    </View>
+                    <View style={{flex: 1, alignItems: 'flex-end'}}>
+                        <Text style={{fontSize: 16, color: colorInputBorder}}>1 de 3</Text>
+                    </View>
+                </View>
+                <View style={{height: 10, flexDirection: 'row', marginTop: 6, backgroundColor: '#rgba(0, 0, 0, 0.08)', borderRadius: 50}}>
+                    <View style={{height: 10, flex: 1, backgroundColor: colorPrimary, borderRadius: 50}} />
+                    <View style={{height: 10, flex: 2}} />
                 </View>
                 <View style={styles.containerSearchField}>
                     <Image source={ SEARCHICON } style={styles.iconButton} />
                     <TextInput placeholder={inputBuscaPlaceholder} style={styles.textSearchInput}></TextInput>
-                    <Image source={ FILTERICON } style={styles.iconButton} />
                 </View>
                 <FlatList
+                    style={{marginTop: 32}}
                     extraData={this.state}
-                    data={this.state.pedidos}
+                    data={this.state.produtos}
                     renderItem={({ item }) => <TouchableOpacity onPress={() => {}}>
-                        { item.showDate ? (
-                            <Text style={styles.textCardDate}>{this.getDate(item.pedido.date)}{complementoDateEValor}{this.valorPorData(item.pedido.date)}</Text>
-                        ) : (
-                            <View />
-                        ) }
                         
                         <View style={styles.containerCard}>
                                     <View flex = {1}></View>
                                     <View style={styles.subContainerCard}>
                                         <View style={styles.containerTop}>
                                             <View style={styles.subContainerCard}>
-                                                <Text style={styles.textPedidoTop}>{item.pedido.nome}</Text>
+                                                <Text style={styles.textPedidoTop}>{item.nome}</Text>
                                             </View>
                                             <View style={styles.subContainerCardValor}>
-                                                <Text style={styles.textPedidoTop}>{prefixoDinheiroReal}{item.pedido.valor}</Text>
+                                                <Text style={styles.textPedidoTop}>{prefixoDinheiroReal}{item.valor}</Text>
                                             </View>
                                         </View>
                                         <View style={styles.subContainerCard}>
-                                            <Text style={styles.textPedidoBottom}>{item.pedido.conteudo}</Text>
+                                            <Text style={styles.textPedidoBottom}>{item.opcoes.length}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -168,7 +107,7 @@ const styles = StyleSheet.create({
         padding: 16
     },
     containerSaudacao: {
-        width: '75%', 
+        width: '100%', 
         paddingBottom: 8, 
         borderBottomColor: colorGreenBorder, 
         borderBottomWidth: 2
@@ -233,9 +172,8 @@ const styles = StyleSheet.create({
     },
     textButton: {
         fontSize: 16, 
-        fontWeight: 'bold', 
-        color: colorInputBorder, 
-        marginStart: 20
+        color: colorInputBorder,
+        marginTop: 16
     },
     saudacao: {
         fontSize: 24, 

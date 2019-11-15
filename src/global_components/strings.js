@@ -6,3 +6,11 @@ export const emailText = "E-mail"
 export const senhaText = "Senha"
 export const insertEmailText = "Insira o seu e-mail aqui"
 export const insertSenhaText = "Insira a sua senha aqui"
+export const saudacaoPedidosList = "Olá, Usuário!"
+export const novoPedidoButtonLabel = "FAZER NOVO PEDIDO"
+export const inputBuscaPlaceholder = "Digite a sua busca aqui"
+export const complementoDateEValor = ", você já vendeu R$ "
+
+
+//small strings
+export const prefixoDinheiroReal = "R$"

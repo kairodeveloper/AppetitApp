@@ -15,14 +15,12 @@ import {
   Image,
   Text,
   TextInput,
-  TouchableOpacity,
-  StatusBar,
+  TouchableOpacity
 } from 'react-native'
 
 import { LOGOIMAGE, HIDEPASSWORD, SHOWPASSWORD } from '../../images'
-import { colorFundo, colorPrimary, colorSubTitle, colorInputBorder, colorWhite, colorBlack } from '../global_components/colors';
+import { colorFundo, colorPrimary, colorSubTitle, colorInputBorder, colorWhite } from '../global_components/colors';
 import { welcomeLoginText, subTitleLoginText, loginButtonText, insertEmailText, insertSenhaText, emailText, senhaText } from '../global_components/strings';
-import { white } from 'ansi-colors';
 
 export default class Login extends Component {
     constructor(props) {
