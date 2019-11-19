@@ -12,12 +12,12 @@ import {
   StatusBar,
 } from 'react-native'
 import FAB from 'react-native-fab'
-import { ICONMALE, ICONLAMP, ICONTV, ICONSNOW, ICONLOCK, PLUSICON, FILTERICON, SEARCHICON, RIGHTICON } from '../../images';
+import { ICONMALE, ICONLAMP, ICONTV, ICONSNOW, ICONLOCK, PLUSICON, FILTERICON, SEARCHICON, MINUSICON } from '../../images';
 import { colorFundo, colorFundoPedidos, colorPrimary, colorGreenBorder, colorBlack, colorInputBorder, colorWhite } from '../global_components/colors';
 import { saudacaoPedidosList, novoPedidoButtonLabel, inputBuscaPlaceholder, complementoDateEValor, prefixoDinheiroReal } from '../global_components/strings';
 
 
-export default class NovoPedidoPrimeiraEtapa extends Component {
+export default class DetalhesProduto extends Component {
 
     constructor(props) {
         super(props)
@@ -45,6 +45,7 @@ export default class NovoPedidoPrimeiraEtapa extends Component {
         produtos = this.agruparPorTipo(produtos)
         this.state = {
             produtos: produtos,
+            qtd: 1,
             cestinha: []
         }
     }
@@ -87,83 +88,108 @@ export default class NovoPedidoPrimeiraEtapa extends Component {
 
     }
 
-    goToDetalheProduto() {
-        this.props.navigation.navigate('DetalhesProduto')
-    }
-
     render() {
         return(
-            <View style={styles.container}>
-                <View style={styles.containerSaudacao}>
-                    <Text style={styles.saudacao}>Informações para o pedido</Text>
-                </View>
-                <Text style={styles.textButton}>Preencha as informações abaixo para concluir o pedido.</Text>
-                
-                <View style={{flexDirection: 'row', marginTop: 16, marginStart: 16, marginEnd: 16}}>
-                    <View style={{flex: 2}}>
-                        <Text style={{fontSize: 16, color: colorBlack}}>O que você está vendendo?</Text>
-                    </View>
-                    <View style={{flex: 1, alignItems: 'flex-end'}}>
-                        <Text style={{fontSize: 16, color: colorInputBorder}}>1 de 3</Text>
-                    </View>
-                </View>
-                <View style={{height: 10, flexDirection: 'row', marginTop: 6, marginStart: 16, marginEnd: 16, backgroundColor: '#rgba(0, 0, 0, 0.08)', borderRadius: 50}}>
-                    <View style={{height: 10, flex: 1, backgroundColor: colorPrimary, borderRadius: 50}} />
-                    <View style={{height: 10, flex: 2}} />
-                </View>
-                <View style={styles.containerSearchField}>
-                    <Image source={ SEARCHICON } style={styles.iconButton} />
-                    <TextInput placeholder={inputBuscaPlaceholder} style={styles.textSearchInput}></TextInput>
-                </View>
-                <FlatList
-                    style={{marginTop: 16, marginStart: 16, marginEnd: 16}}
-                    extraData={this.state}
-                    data={this.state.produtos}
-                    renderItem={({ item }) => <TouchableOpacity onPress={() => { this.goToDetalheProduto() }}>
-                        { item.showTipo ? (
-                            <Text style={styles.textCardDate}>{item.produto.tipo}</Text>
-                        ) : (
-                            <View />
-                        )}
+            <View flex={1}>
+                <ScrollView flex={1}>
+                    <View style={styles.container}>
+                        <View style={styles.containerSaudacao}>
+                            <Text style={styles.saudacao}>Detalhes do pedido</Text>
+                        </View>
+                        <Text style={styles.textButton}>Caso queira, aproveite para adicionar alguma observação para este pedido.</Text>
+                        
                         <View style={styles.containerCard}>
                             <View flex = {1}></View>
-                                <View style={styles.subContainerCard}>
+                            <View style={styles.subContainerCard}>
                                 <View style={styles.containerTop}>
                                     <View style={styles.subContainerCard}>
-                                        <Text style={styles.textPedidoTop}>{item.produto.nome}</Text>
+                                        <Text style={styles.textPedidoTop}>Cuscuz Completo</Text>
                                     </View>
-                                    { item.produto.opcoes.length>0 ? (
-                                        <View style={styles.subContainerCard}>
-                                            <Text style={styles.textPedidoBottom}>{this.getOpcoesLabel(item.produto.opcoes)}</Text>
-                                        </View>
-                                    ) : (
-                                        <View />
-                                    ) }
+                                    
+                                    <View style={styles.subContainerCard}>
+                                        <Text style={styles.textPedidoBottom}>milho ou arroz</Text>
+                                    </View>
                                     
                                 </View>
                                 <View style={styles.subContainerCardValor}>
-                                    <Text style={styles.textPedidoTop}>{prefixoDinheiroReal}{item.produto.valor}</Text>
+                                    <Text style={styles.textPedidoTop}>{prefixoDinheiroReal} 3,25</Text>
                                 </View>
                             </View>
                         </View>
-                    </TouchableOpacity>
-                }/>
-                <View style={{height: 60, flexDirection: 'column', backgroundColor: colorPrimary, justifyContent: 'center'}}>
-                    <TouchableOpacity onPress={() => {
-                        this.props.navigation.navigate('NovoPedidoSegundaEtapa')
-                    }}>
-                        <View style={{height: 50, width: '100%', borderRadius: 5, backgroundColor: colorPrimary, flexDirection: 'row'}}>
-                            <View style={{flex: 1, padding: 16, justifyContent: 'center', alignItems: 'flex-start'}}>
-                                <Text style={{color: colorWhite, fontWeight: 'bold'}}>Total: R$ 3,5</Text>
+                        <View style={{height: 1, flexDirection: 'row', marginTop: 16, backgroundColor: '#rgba(0, 0, 0, 0.08)'}} />
+                        
+                        <View style={{marginTop: 16}}>
+                            <Text style={styles.textPedidoTop}>Opções</Text>
+                            <Text style={styles.textButton}>Caso queira, aproveite para adicionar alguma observação para este pedido.</Text>
+                            <View style={{height: 50, flexDirection: 'row', alignItems: 'center', marginTop: 16, backgroundColor: colorWhite, borderWidth: 1, borderColor: colorInputBorder, borderRadius: 4}}>
+                                <View style={{flex: 2, flexDirection: 'column', alignItems: 'center'}}>
+                                    <View style={{height: 18, width: 18, borderWidth: 2, borderRadius: 25, borderColor: colorPrimary, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                                        <View style={{height: 10, width: 10, backgroundColor: colorPrimary, borderRadius: 25}}/>
+                                    </View>
+                                </View>
+                                <View style={{flex: 8}}>
+                                    <Text style={{fontSize: 16}}>Cuscuz de arroz</Text>
+                                </View>
                             </View>
-                            <View style={{flex: 1, padding: 16, paddingEnd: 6, justifyContent: 'center', alignItems: 'flex-end'}}>
-                                <Text style={{color: colorWhite, fontWeight: 'bold'}}>Avançar</Text>
-                            </View>
-                            <View style={{justifyContent: 'center', marginEnd: 16}}>
-                                <Image source={ RIGHTICON } style={styles.iconButton} />
+                            <View style={{height: 50, flexDirection: 'row', alignItems: 'center', marginTop: 10, backgroundColor: colorWhite, borderColor: colorInputBorder, borderWidth: 1, borderRadius: 4}}>
+                                <View style={{flex: 2, flexDirection: 'column', alignItems: 'center'}}>
+                                    <View style={{height: 18, width: 18, borderWidth: 2, borderRadius: 25, borderColor: colorPrimary, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                                        
+                                    </View>
+                                </View>
+                                <View style={{flex: 8}}>
+                                    <Text style={{fontSize: 16}}>Cuscuz de milho</Text>
+                                </View>
                             </View>
                         </View>
-                    </TouchableOpacity>
+                        <View style={{marginTop: 16}}>
+                            <Text style={styles.textPedidoTop}>Observações</Text>
+                            <View style={{height: 50, flexDirection: 'row', alignItems: 'center', marginTop: 10, backgroundColor: colorWhite, borderColor: colorInputBorder, borderWidth: 1, borderRadius: 4}}>
+                                <TextInput style={{height: 50, fontSize: 16, paddingStart: 16}} placeholder={"Deseja adicionar alguma coisa?"}></TextInput>
+                            </View>
+                        </View>
+                    </View>
+                </ScrollView>
+                <View style={{height: 68, backgroundColor: colorWhite, 
+                            shadowColor: colorPrimary, 
+                            shadowOffset: { width: 0,  height: 2 },
+                            shadowOpacity: 0.7,
+                            shadowRadius: 4,
+                            elevation: 2,
+                            flexDirection: 'row'}}>
+
+                    <View style={{flex: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                        <TouchableOpacity onPress={() => {
+                            this.setState({
+                                qtd: this.state.qtd-1
+                            })
+                        }}>
+                            <Image source={ MINUSICON } style={styles.iconButton} />
+                        </TouchableOpacity>
+                        <Text style={{fontSize: 16, marginStart: 16, marginEnd: 16}}>{this.state.qtd}</Text>
+                        <TouchableOpacity onPress={() => {
+                            this.setState({
+                                qtd: this.state.qtd+1
+                            })
+                        }}>
+                            <Image source={ PLUSICON } style={styles.iconButton} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{flex: 6, flexDirection: 'column', justifyContent: 'center', paddingStart: 16, paddingEnd: 16}}>
+                        <TouchableOpacity onPress={() => {
+                            this.props.navigation.goBack()
+                        }}>
+                            <View style={{height: 50, width: '100%', borderRadius: 5, backgroundColor: colorPrimary, flexDirection: 'row'}}>
+                                <View style={{flex: 1, padding: 16, justifyContent: 'center', alignItems: 'flex-start'}}>
+                                    <Text style={{color: colorWhite, fontWeight: 'bold'}}>Adicionar</Text>
+                                </View>
+                                <View style={{flex: 1, padding: 16, justifyContent: 'center', alignItems: 'flex-end'}}>
+                                    <Text style={{color: colorWhite, fontWeight: 'bold'}}>R$ {this.state.qtd * 3.5}</Text>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                            
                 </View>
             </View>
         )
@@ -173,15 +199,14 @@ export default class NovoPedidoPrimeiraEtapa extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1, 
-        backgroundColor: colorFundo
+        backgroundColor: colorFundo, 
+        padding: 16
     },
     containerSaudacao: {
-        paddingBottom: 8,
+        width: '100%', 
+        paddingBottom: 8, 
         borderBottomColor: colorGreenBorder, 
-        borderBottomWidth: 2,
-        marginTop: 16,
-        marginStart: 16,
-        marginEnd: 16
+        borderBottomWidth: 2
     },
     containerButtonNovoPedido: {
         height: 56,
@@ -201,8 +226,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row', 
         alignItems: 'center', 
         marginTop: 16, 
-        marginStart: 16, 
-        marginEnd: 16,
         borderBottomColor: colorInputBorder
     },
     containerCard: {
@@ -219,6 +242,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         paddingStart: 16,
         paddingEnd: 16,
+        marginTop: 16,
         flexDirection: 'row'
     },
     containerTop: {
@@ -249,9 +273,7 @@ const styles = StyleSheet.create({
     textButton: {
         fontSize: 16, 
         color: colorInputBorder,
-        marginTop: 16,
-        marginStart: 16,
-        marginEnd: 16
+        marginTop: 16
     },
     saudacao: {
         fontSize: 24, 

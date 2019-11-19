@@ -4,6 +4,10 @@ import Login from './pages/Login';
 import PedidosList from './pages/PedidosList';
 import { colorPrimary, colorFundo, colorWhite } from './global_components/colors';
 import NovoPedidoPrimeiraEtapa from './pages/NovoPedidoPrimeiraEtapa';
+import DetalhesProduto from './pages/DetalhesProduto';
+import NovoPedidoSegundaEtapa from './pages/NovoPedidoSegundaEtapa';
+import NovoPedidoUltimaEtapa from './pages/NovoPedidoUltimaEtapa';
+import MenuEndPedido from './pages/MenuEndPedido';
 
 const RootStack = createStackNavigator({
     Login: {
@@ -30,6 +34,48 @@ const RootStack = createStackNavigator({
             },
         }
     },
+    NovoPedidoSegundaEtapa: {
+        screen: NovoPedidoSegundaEtapa,
+        navigationOptions: {
+            headerTitleStyle: {
+                color: colorPrimary,
+            },
+            headerTintColor:  colorPrimary,
+            headerStyle: {
+                backgroundColor: colorFundo
+            },
+        }
+    },
+    NovoPedidoUltimaEtapa: {
+        screen: NovoPedidoUltimaEtapa,
+        navigationOptions: {
+            headerTitleStyle: {
+                color: colorPrimary,
+            },
+            headerTintColor:  colorPrimary,
+            headerStyle: {
+                backgroundColor: colorFundo
+            },
+        }
+    },
+    DetalhesProduto: {
+        screen: DetalhesProduto,
+        navigationOptions: {
+            headerTitleStyle: {
+                color: colorPrimary,
+            },
+            headerTintColor:  colorPrimary,
+            headerStyle: {
+                backgroundColor: colorFundo
+            },
+        }
+    },
+    MenuEndPedido: {
+        screen: MenuEndPedido,
+        navigationOptions: {
+            header: null
+        }
+    }
 })
 
 const AppContainer = createAppContainer(RootStack);
