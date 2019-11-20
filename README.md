@@ -30,7 +30,7 @@
   * _PedidosList.js_
     > Lista os pedidos já feitos.
     
-**Items que faltam implementar
+**Items que faltam implementar**
 * Separação total de código de lógica (back) e código de design (front)
 * Melhoria de código
 * Implementação de classes de objetos para banco de dados
