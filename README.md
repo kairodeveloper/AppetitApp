@@ -30,9 +30,9 @@
   * _PedidosList.js_
     > Lista os pedidos já feitos.
     
-  **Items que faltam implementar
-  * Separação total de código de lógica (back) e código de design (front)
-  * Melhoria de código
-  * Implementação de classes de objetos para banco de dados
-  * Finalização de funcionalidades, bem como, a melhoria no fluxo de navegação
+**Items que faltam implementar
+* Separação total de código de lógica (back) e código de design (front)
+* Melhoria de código
+* Implementação de classes de objetos para banco de dados
+* Finalização de funcionalidades, bem como, a melhoria no fluxo de navegação
   
